@@ -133,7 +133,7 @@ A: Select "3. Check installed Python versions" in the main menu, and the program
 
 ## Example Usage
 
-### Install Python 3.10.11
+### Install Python 3.11.9
 
 1. Run `setup.bat` to start the program
 2. Select "1. Get available Python versions"
