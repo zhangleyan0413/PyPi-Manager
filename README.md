@@ -1,4 +1,4 @@
-# Py Manager - Python Manager
+# PyPi Manager - Python Pip Manager
 
 A powerful Python environment management tool that simplifies Python installation, dependency management, pip troubleshooting, and mirror source configuration.
 
