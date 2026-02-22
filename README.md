@@ -1,225 +1,225 @@
 # PyPi Manager
 
-全称：Python Pip Manager
+Full name: Python Pip Manager
 
-版本：1.2.0
+Version: 1.2.0
 
-一个功能强大的Python版本管理工具，支持选择安装不同版本的Python，管理依赖库，修复pip问题，以及配置镜像源。
+A powerful Python environment management tool that simplifies Python installation, dependency management, pip troubleshooting, and mirror source configuration.
 
-## 功能特性
+## Features
 
-###  pip包管理
-- 显示已安装的包
-- 搜索包并显示版本信息
-- 安装指定版本的包
-- 升级包到最新版本
-- 卸载不需要的包
-- 从wheel文件安装包
+### 📦 pip Package Management
+- Show installed packages
+- Search for packages and display version information
+- Install specific version of packages
+- Upgrade packages to latest version
+- Uninstall unnecessary packages
+- Install packages from wheel files
 
-### 🔧 pip修复
-- 检查pip状态
-- 使用ensurepip修复pip
-- 使用get-pip.py脚本安装pip
-- 自动检测pip错误并建议修复
+### 🔧 pip Repair
+- Check pip status
+- Fix pip using ensurepip
+- Install pip using get-pip.py script
+- Automatically detect pip errors and suggest fixes
 
-### 🚀 镜像源配置
-- 内置5个推荐镜像源（清华、中科大、阿里云、豆瓣、官方）
-- 添加自定义镜像源
-- 删除自定义镜像源
-- 设置默认镜像源
+### 🚀 Mirror Source Configuration
+- Built-in 5 recommended mirror sources (Tsinghua, USTC, Alibaba Cloud, Douban, Official)
+- Add custom mirror sources
+- Delete custom mirror sources
+- Set default mirror source
 
-### ⚡ 批量包管理
-- 批量更新所有可更新的包
-- 批量卸载多个包
-- 导出已安装的包列表到requirements.txt
-- 从requirements.txt文件安装包
+### ⚡ Batch Package Management
+- Batch update all updatable packages
+- Batch uninstall multiple packages
+- Export installed packages list to requirements.txt
+- Install packages from requirements.txt file
 
-### � Python版本管理
-- 获取可用的Python版本列表
-- 安装指定版本的Python
-- 检查已安装的Python版本及其路径
+### 🐍 Python Version Management
+- Get available Python version list
+- Install specific Python version
+- Check installed Python versions and their paths
 
-### � 智能功能
-- 为所有耗时操作添加了进度条和加载动画
-- 支持国内镜像源加速
-- 详细的错误提示和解决方案
-- 多线程执行耗时操作，避免界面卡顿
+### 💡 Smart Features
+- Added progress bars and loading animations for all time-consuming operations
+- Support domestic mirror source acceleration
+- Detailed error prompts and solutions
+- Multi-threaded execution of time-consuming operations to avoid interface freezing
 
-## 安装步骤
+## Installation
 
-1. **下载程序**
-   - 克隆或下载本仓库到本地
-   - 确保下载到的文件结构完整
+1. **Download the program**
+   - Clone or download this repository to your local machine
+   - Ensure the downloaded file structure is complete
 
-2. **运行初始化脚本**
-   - 双击运行 `setup.bat` 文件
-   - 脚本会自动检查Python安装情况
-   - 如果未安装Python，会自动下载并安装
-   - 如果已安装Python，会检查并安装所需依赖
+2. **Run initialization script**
+   - Double-click to run `setup.bat` file
+   - The script will automatically check Python installation status
+   - If Python is not installed, it will automatically download and install
+   - If Python is already installed, it will check and install required dependencies
 
-3. **开始使用**
-   - 初始化完成后，程序会自动启动
-   - 按照菜单提示进行操作
+3. **Start using**
+   - After initialization, the program will start automatically
+   - Follow the menu prompts to operate
 
-## 使用方法
+## Usage
 
-### 主菜单
+### Main Menu
 
 ```
 PyPi Manager
-1. 管理pip包
-2. 检查并修复pip
-3. 配置镜像源
-4. 批量包管理
-5. Python版本管理
-6. 关于作者
-7. 退出
+1. Manage pip packages
+2. Check and fix pip
+3. Configure mirror sources
+4. Batch package management
+5. Python version management
+6. About author
+7. Exit
 ```
 
-### pip包管理菜单
+### pip Package Management Menu
 
 ```
-pip包管理菜单
-1. 显示已安装的包
-2. 搜索包
-3. 安装包
-4. 升级包
-5. 卸载包
-6. 从wheel文件安装包
-7. 返回主菜单
+pip Package Management Menu
+1. Show installed packages
+2. Search for packages
+3. Install packages
+4. Upgrade packages
+5. Uninstall packages
+6. Install packages from wheel files
+7. Return to main menu
 ```
 
-### 配置镜像源菜单
+### Mirror Source Configuration Menu
 
 ```
-镜像源管理菜单
-1. 显示当前镜像源
-2. 选择内置镜像源
-3. 添加自定义镜像源
-4. 删除自定义镜像源
-5. 设置默认镜像源
-6. 返回主菜单
+Mirror Source Management Menu
+1. Show current mirror source
+2. Select built-in mirror source
+3. Add custom mirror source
+4. Delete custom mirror source
+5. Set default mirror source
+6. Return to main menu
 ```
 
-### 批量包管理菜单
+### Batch Package Management Menu
 
 ```
-批量包管理菜单
-1. 检查可更新的包
-2. 批量更新所有包
-3. 批量卸载包
-4. 导出已安装的包列表
-5. 从文件安装包
-6. 返回主菜单
+Batch Package Management Menu
+1. Check updatable packages
+2. Batch update all packages
+3. Batch uninstall packages
+4. Export installed packages list
+5. Install packages from file
+6. Return to main menu
 ```
 
-### Python版本管理菜单
+### Python Version Management Menu
 
 ```
-Python版本管理菜单
-1. 获取可用Python版本
-2. 安装指定版本
-3. 检查已安装的Python版本
-4. 返回主菜单
+Python Version Management Menu
+1. Get available Python versions
+2. Install specific version
+3. Check installed Python versions
+4. Return to main menu
 ```
 
-## 常见问题
+## FAQ
 
-### Q: 安装Python时失败怎么办？
-A: 检查网络连接，确保可以访问Python官网。如果持续失败，可以尝试手动下载Python安装包并安装。
+### Q: What to do if Python installation fails?
+A: Check your network connection and ensure you can access the Python official website. If it continues to fail, try manually downloading the Python installer and installing it.
 
-### Q: pip安装依赖库时出错怎么办？
-A: 程序会自动检测pip错误并建议修复方法。您可以选择使用ensurepip修复pip，或使用get-pip.py脚本重新安装。
+### Q: What to do if pip fails to install dependencies?
+A: The program will automatically detect pip errors and suggest fix methods. You can choose to fix pip using ensurepip or reinstall it using the get-pip.py script.
 
-### Q: 如何加速依赖库下载？
-A: 在设置中选择国内镜像源（如清华源、阿里云源），可以显著提高下载速度。
+### Q: How to speed up dependency downloads?
+A: Select domestic mirror sources (such as Tsinghua source, Alibaba Cloud source) in settings to significantly improve download speed.
 
-### Q: 如何安装特定版本的依赖库？
-A: 在安装依赖库时，输入版本号即可，例如：`requests==2.31.0`。
+### Q: How to install a specific version of a dependency?
+A: When installing dependencies, enter the version number, for example: `requests==2.31.0`.
 
-### Q: 如何查看已安装的Python版本？
-A: 在主菜单中选择"3. 检查已安装的Python版本"，程序会显示所有已安装的Python版本及其路径。
+### Q: How to view installed Python versions?
+A: Select "3. Check installed Python versions" in the main menu, and the program will display all installed Python versions and their paths.
 
-## 技术说明
+## Technical Notes
 
-### 核心模块
-- `main.py` - 主程序入口，包含命令行界面和核心逻辑
-- `version_fetcher.py` - 获取Python版本信息
-- `installer.py` - 处理Python安装过程
-- `setup.bat` - 环境初始化脚本
+### Core Modules
+- `main.py` - Main program entry, containing command-line interface and core logic
+- `version_fetcher.py` - Get Python version information
+- `installer.py` - Handle Python installation process
+- `setup.bat` - Environment initialization script
 
-### 依赖项
+### Dependencies
 - Python 3.6+
-- requests（用于获取Python版本信息）
+- requests (for fetching Python version information)
 
-### 系统要求
-- Windows操作系统
-- 网络连接（用于下载Python安装包和依赖库）
-- 管理员权限（用于安装Python）
+### System Requirements
+- Windows operating system
+- Network connection (for downloading Python installers and dependencies)
+- Administrator privileges (for installing Python)
 
-## 示例用法
+## Example Usage
 
-### 安装Python 3.10.11
+### Install Python 3.10.11
 
-1. 运行 `setup.bat` 启动程序
-2. 选择 "1. 获取可用Python版本"
-3. 选择 "2. 安装指定版本"
-4. 输入版本编号（对应Python 3.10.11）
-5. 确认安装
-6. 等待安装完成
+1. Run `setup.bat` to start the program
+2. Select "1. Get available Python versions"
+3. Select "2. Install specific version"
+4. Enter the version number (corresponding to Python 3.10.11)
+5. Confirm installation
+6. Wait for installation to complete
 
-### 安装依赖库
+### Install Dependencies
 
-1. 运行 `setup.bat` 启动程序
-2. 选择 "4. 管理Python依赖库"
-3. 选择 "3. 安装依赖库"
-4. 输入依赖库名称（如 `requests`）
-5. 选择是否指定版本（按回车安装最新版本）
-6. 等待安装完成
+1. Run `setup.bat` to start the program
+2. Select "4. Manage Python dependencies"
+3. Select "3. Install dependencies"
+4. Enter the dependency name (e.g., `requests`)
+5. Choose whether to specify a version (press Enter to install the latest version)
+6. Wait for installation to complete
 
-### 修复pip
+### Fix Pip
 
-1. 运行 `setup.bat` 启动程序
-2. 选择 "4. 管理Python依赖库"
-3. 选择 "7. 安装/修复pip"
-4. 选择 "1. 使用ensurepip模块安装/修复pip"
-5. 等待修复完成
+1. Run `setup.bat` to start the program
+2. Select "4. Manage Python dependencies"
+3. Select "7. Install/Fix pip"
+4. Select "1. Use ensurepip module to install/fix pip"
+5. Wait for the fix to complete
 
-## 注意事项
+## Notes
 
-- 安装Python时需要管理员权限
-- 建议使用国内镜像源以提高下载速度
-- 如遇到pip相关问题，可使用程序内置的pip修复功能
-- 对于网络环境较差的情况，建议使用wheel文件离线安装依赖库
+- Administrator privileges are required for installing Python
+- It is recommended to use domestic mirror sources to improve download speed
+- For pip-related issues, you can use the program's built-in pip fix function
+- For environments with poor network conditions, it is recommended to use wheel files for offline installation
 
-## 许可证
+## License
 
-本项目采用MIT许可证，详见LICENSE文件。
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-## 更新日志
+## Changelog
 
 ### v1.2.0
-- 新增自动更新功能，支持从GitHub仓库直接下载最新版本
-- 改进版本号比较逻辑，能够自动检测是否为最新版本
-- 支持多种版本号格式的识别和比较
-- 优化了更新过程的用户体验，添加了详细的进度提示
-- 增强了网络错误处理，提高了更新过程的稳定性
+- Added automatic update functionality, supporting direct download of the latest version from GitHub repository
+- Improved version number comparison logic, automatically detecting if it is the latest version
+- Supported identification and comparison of multiple version number formats
+- Optimized user experience during update process, added detailed progress prompts
+- Enhanced network error handling, improved update process stability
 
 ### v1.1.0
-- 重新设计程序结构，将功能重点从Python版本管理转向pip管理
-- 新增批量包管理功能，支持批量更新、卸载、导出和从文件安装
-- 为所有耗时操作添加了进度条和加载动画
-- 优化了pip修复功能，提供多种修复方法
-- 增强了镜像源管理功能，支持更多内置镜像源
-- 修复了f-string语法错误和pip命令参数错误
+- Redesigned program structure, shifting focus from Python version management to pip management
+- Added batch package management functionality, supporting batch update, uninstall, export, and installation from files
+- Added progress bars and loading animations for all time-consuming operations
+- Optimized pip repair functionality, providing multiple repair methods
+- Enhanced mirror source management functionality, supporting more built-in mirror sources
+- Fixed f-string syntax errors and pip command parameter errors
 
 ### v1.0.0
-- 初始版本发布
-- 支持Python版本选择和安装
-- 支持依赖库管理
-- 支持pip修复
-- 支持镜像源管理
+- Initial release
+- Support Python version selection and installation
+- Support dependency management
+- Support pip repair
+- Support mirror source management
 
 ---
 
-**祝您使用愉快！** 🎉
+**Happy coding!** 🎉
