@@ -46,10 +46,11 @@ class CommandLineInstaller:
                 print("3. 配置镜像源")
                 print("4. 批量包管理")
                 print("5. Python版本管理")
-                print("6. 关于作者")
-                print("7. 退出")
+                print("6. 检查更新")
+                print("7. 关于作者")
+                print("8. 退出")
                 
-                choice = input("请输入选择 (1-7): ")
+                choice = input("请输入选择 (1-8): ")
                 
                 if choice == "1":
                     self.manage_pip_packages()
@@ -62,8 +63,10 @@ class CommandLineInstaller:
                 elif choice == "5":
                     self.manage_python_versions()
                 elif choice == "6":
-                    self.show_author_info()
+                    self.check_for_updates()
                 elif choice == "7":
+                    self.show_author_info()
+                elif choice == "8":
                     print("\n退出程序...")
                     break
                 else:
@@ -848,15 +851,266 @@ class CommandLineInstaller:
         print("=======================================")
         print("项目名称: PyPi Manager")
         print("全称: Python Pip Manager")
-        print("版本: 1.1.0")
+        print("版本: 1.2.0")
         print("作者: Your Name")
         print("邮箱: your.email@example.com")
-        print("GitHub: https://github.com/yourusername/pypi-manager")
+        print("GitHub: https://github.com/zhangleyan0413/PyPi-Manager")
         print("=======================================")
         print("PyPi Manager 是一个功能强大的pip管理工具")
         print("支持pip包管理、镜像源配置、批量操作和Python版本管理")
         print("=======================================")
+    
+    def check_for_updates(self):
+        """从GitHub检查最新版本并自动下载"""
+        import requests
+        import json
+        import threading
+        import time
+        import zipfile
+        import os
+        import shutil
+        
+        print("\n正在检查更新...")
+        
+        # 显示加载动画
+        def loading_animation():
+            spinner = ["|", "/", "-", "\\"]
+            i = 0
+            while loading:
+                print(f"检查中 {spinner[i % 4]}", end="\r")
+                i += 1
+                time.sleep(0.1)
+        
+        loading = True
+        thread = threading.Thread(target=loading_animation)
+        thread.daemon = True
+        thread.start()
+        
+        try:
+            # 获取当前版本
+            current_version = "1.2.0"
+            
+            # 从GitHub API获取仓库信息
+            repo_url = "https://api.github.com/repos/zhangleyan0413/PyPi-Manager"
+            response = requests.get(repo_url, timeout=10)
+            
+            loading = False
+            
+            if response.status_code == 200:
+                repo_data = response.json()
+                
+                # 获取默认分支的最新提交
+                default_branch = repo_data.get("default_branch", "main")
+                branch_url = f"https://api.github.com/repos/zhangleyan0413/PyPi-Manager/branches/{default_branch}"
+                branch_response = requests.get(branch_url, timeout=10)
+                
+                if branch_response.status_code == 200:
+                    branch_data = branch_response.json()
+                    latest_commit_sha = branch_data.get("commit", {}).get("sha", "")[:7]  # 获取提交SHA的前7位
+                    latest_commit_date = branch_data.get("commit", {}).get("commit", {}).get("author", {}).get("date", "")
+                    
+                    print("\n检查更新结果：")
+                    print(f"当前版本: {current_version}")
+                    print(f"默认分支: {default_branch}")
+                    print(f"最新提交: {latest_commit_sha}")
+                    print(f"提交时间: {latest_commit_date}")
+                    
+                    # 尝试从仓库中获取版本号
+                    # 检查README.md文件中的版本号
+                    readme_url = f"https://api.github.com/repos/zhangleyan0413/PyPi-Manager/contents/README.md"
+                    readme_response = requests.get(readme_url, timeout=10)
+                    
+                    repo_version = ""
+                    if readme_response.status_code == 200:
+                        readme_data = readme_response.json()
+                        import base64
+                        try:
+                            readme_content = base64.b64decode(readme_data.get("content", "")).decode('utf-8')
+                            # 查找版本号
+                            import re
+                            # 尝试多种可能的格式
+                            version_patterns = [
+                                r'版本：([\d.]+)',  # 中文格式
+                                r'Version: ([\d.]+)',  # 英文格式
+                                r'version: ([\d.]+)',  # 小写英文格式
+                                r'v([\d.]+)',  # 仅版本号前缀
+                                r'([\d.]+)'  # 仅数字格式
+                            ]
+                            
+                            for pattern in version_patterns:
+                                version_match = re.search(pattern, readme_content)
+                                if version_match:
+                                    repo_version = version_match.group(1)
+                                    break
+                        except Exception:
+                            pass
+                    
+                    # 比较版本号
+                    if repo_version:
+                        print(f"仓库版本: {repo_version}")
+                        
+                        # 比较版本号
+                        def compare_versions(v1, v2):
+                            v1_parts = list(map(int, v1.split(".")))
+                            v2_parts = list(map(int, v2.split(".")))
+                            return (v1_parts > v2_parts) - (v1_parts < v2_parts)
+                        
+                        comparison = compare_versions(repo_version, current_version)
+                        if comparison > 0:
+                            print("\n🎉 发现新版本！")
+                            # 询问是否自动下载
+                            auto_download = input("\n是否自动下载并更新到仓库最新版本？ (y/n): ")
+                            if auto_download.lower() == "y":
+                                # 获取仓库的zipball_url
+                                zip_url = repo_data.get("zipball_url")
+                                if zip_url:
+                                    print("\n开始下载仓库最新版本...")
+                                    # 使用提交SHA作为版本标识
+                                    version = f"{default_branch}-{latest_commit_sha}"
+                                    self._download_and_update(zip_url, version)
+                                else:
+                                    print("\n❌ 无法获取下载链接")
+                                    print("请手动访问以下链接下载最新版本：")
+                                    print("https://github.com/zhangleyan0413/PyPi-Manager")
+                            else:
+                                print("\n请访问以下链接查看仓库最新内容：")
+                                print("https://github.com/zhangleyan0413/PyPi-Manager")
+                        elif comparison < 0:
+                            print("\n⚠️  当前版本比仓库版本新，可能是开发版本")
+                        else:
+                            print("\n✅ 当前已是最新版本")
+                    else:
+                        # 无法获取仓库版本号，询问是否下载
+                        auto_download = input("\n无法获取仓库版本号，是否下载仓库最新内容？ (y/n): ")
+                        if auto_download.lower() == "y":
+                            # 获取仓库的zipball_url
+                            zip_url = repo_data.get("zipball_url")
+                            if zip_url:
+                                print("\n开始下载仓库最新版本...")
+                                # 使用提交SHA作为版本标识
+                                version = f"{default_branch}-{latest_commit_sha}"
+                                self._download_and_update(zip_url, version)
+                            else:
+                                print("\n❌ 无法获取下载链接")
+                                print("请手动访问以下链接下载最新版本：")
+                                print("https://github.com/zhangleyan0413/PyPi-Manager")
+                        else:
+                            print("\n请访问以下链接查看仓库最新内容：")
+                            print("https://github.com/zhangleyan0413/PyPi-Manager")
+                else:
+                    print("\n❌ 无法获取分支信息，请检查网络连接")
+            else:
+                print("\n❌ 无法连接到GitHub服务器，请检查网络连接")
+        except Exception as e:
+            loading = False
+            print(f"\n❌ 检查更新失败: {str(e)}")
+            print("请手动访问GitHub仓库查看是否有新版本")
+            print("https://github.com/zhangleyan0413/PyPi-Manager")
         input("按回车键返回主菜单...")
+    
+    def _download_and_update(self, download_url, version):
+        """下载并更新程序"""
+        import requests
+        import zipfile
+        import os
+        import shutil
+        import threading
+        import time
+        
+        # 下载文件
+        zip_file_path = f"PyPi-Manager-{version}.zip"
+        temp_dir = f"PyPi-Manager-{version}"
+        
+        try:
+            # 显示下载进度
+            def download_with_progress(url, file_path):
+                response = requests.get(url, stream=True, timeout=30)
+                total_size = int(response.headers.get('content-length', 0))
+                downloaded_size = 0
+                
+                with open(file_path, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        if chunk:
+                            file.write(chunk)
+                            downloaded_size += len(chunk)
+                            
+                            # 显示进度
+                            progress = downloaded_size / total_size * 100
+                            print(f"下载进度: {progress:.1f}%", end="\r")
+                
+                print("\n下载完成！")
+            
+            # 下载文件
+            download_with_progress(download_url, zip_file_path)
+            
+            # 解压文件
+            print("\n正在解压文件...")
+            
+            # 解压到临时目录
+            if os.path.exists(temp_dir):
+                shutil.rmtree(temp_dir)
+            
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                zip_ref.extractall(temp_dir)
+            
+            # 获取解压后的第一个目录
+            extracted_dirs = [d for d in os.listdir(temp_dir) if os.path.isdir(os.path.join(temp_dir, d))]
+            if not extracted_dirs:
+                print("❌ 解压失败，无法找到项目目录")
+                return
+            
+            source_dir = os.path.join(temp_dir, extracted_dirs[0])
+            
+            # 复制文件到当前目录
+            print("\n正在更新文件...")
+            
+            # 获取当前目录
+            current_dir = os.getcwd()
+            
+            # 复制文件
+            for root, dirs, files in os.walk(source_dir):
+                # 计算相对路径
+                rel_path = os.path.relpath(root, source_dir)
+                dest_path = os.path.join(current_dir, rel_path)
+                
+                # 创建目标目录
+                if not os.path.exists(dest_path):
+                    os.makedirs(dest_path)
+                
+                # 复制文件
+                for file in files:
+                    src_file = os.path.join(root, file)
+                    dest_file = os.path.join(dest_path, file)
+                    
+                    # 如果文件存在，先删除
+                    if os.path.exists(dest_file):
+                        os.remove(dest_file)
+                    
+                    shutil.copy2(src_file, dest_file)
+            
+            # 清理临时文件
+            print("\n正在清理临时文件...")
+            if os.path.exists(zip_file_path):
+                os.remove(zip_file_path)
+            if os.path.exists(temp_dir):
+                shutil.rmtree(temp_dir)
+            
+            print("\n🎉 更新成功！")
+            print(f"已更新到版本 {version}")
+            print("\n请重新启动程序以应用更新。")
+            
+        except Exception as e:
+            print(f"\n❌ 更新失败: {str(e)}")
+            print("请手动下载并更新")
+            
+            # 清理临时文件
+            try:
+                if os.path.exists(zip_file_path):
+                    os.remove(zip_file_path)
+                if os.path.exists(temp_dir):
+                    shutil.rmtree(temp_dir)
+            except:
+                pass
     
     def manage_pip_packages(self):
         """管理pip包"""
