@@ -1,37 +1,49 @@
-# PyPi Manager - Python Pip Manager
+# PyPi Manager
+
+Full name: Python Pip Manager
+
+Version: 1.1.0
 
 A powerful Python environment management tool that simplifies Python installation, dependency management, pip troubleshooting, and mirror source configuration.
 
 ## Features
 
-### 🐍 Python Version Management
-- Get available Python version list
-- Install specific Python versions
-- Check installed Python versions and their paths
+### 📦 pip Package Management
+- Show installed packages
+- Search for packages and display version information
+- Install specific version of packages
+- Upgrade packages to latest version
+- Uninstall unnecessary packages
+- Install packages from wheel files
 
-### 📦 Dependency Management
-- Show installed dependencies
-- Search dependencies and display version information
-- Install dependencies with specific versions
-- Upgrade dependencies to latest versions
-- Uninstall unnecessary dependencies
-- Install dependencies from wheel files
-
-### 🔧 Pip Management
-- Install/Fix pip
-- Multiple pip repair methods
+### 🔧 pip Repair
 - Check pip status
+- Fix pip using ensurepip
+- Install pip using get-pip.py script
+- Automatically detect pip errors and suggest fixes
 
-### 🚀 Mirror Source Management
+### 🚀 Mirror Source Configuration
 - Built-in 5 recommended mirror sources (Tsinghua, USTC, Alibaba Cloud, Douban, Official)
 - Add custom mirror sources
+- Delete custom mirror sources
 - Set default mirror source
 
+### ⚡ Batch Package Management
+- Batch update all updatable packages
+- Batch uninstall multiple packages
+- Export installed packages list to requirements.txt
+- Install packages from requirements.txt file
+
+### 🐍 Python Version Management
+- Get available Python version list
+- Install specific Python version
+- Check installed Python versions and their paths
+
 ### 💡 Smart Features
-- Auto-detect pip errors and suggest fixes
-- Show download and installation progress
-- Support domestic mirror sources for acceleration
-- Detailed error messages and solutions
+- Added progress bars and loading animations for all time-consuming operations
+- Support domestic mirror source acceleration
+- Detailed error prompts and solutions
+- Multi-threaded execution of time-consuming operations to avoid interface freezing
 
 ## Installation
 
@@ -54,38 +66,30 @@ A powerful Python environment management tool that simplifies Python installatio
 ### Main Menu
 
 ```
-Python Version Selector
-1. Get available Python versions
-2. Install specific version
-3. Check installed Python versions
-4. Manage Python dependencies
-5. Settings
-6. Exit
+PyPi Manager
+1. Manage pip packages
+2. Check and fix pip
+3. Configure mirror sources
+4. Batch package management
+5. Python version management
+6. About author
+7. Exit
 ```
 
-### Dependency Management Menu
+### pip Package Management Menu
 
 ```
-Dependency Management Menu
-1. Show installed dependencies
-2. Search dependencies
-3. Install dependencies
-4. Upgrade dependencies
-5. Uninstall dependencies
-6. Install from wheel file
-7. Install/Fix pip
-8. Return to main menu
+pip Package Management Menu
+1. Show installed packages
+2. Search for packages
+3. Install packages
+4. Upgrade packages
+5. Uninstall packages
+6. Install packages from wheel files
+7. Return to main menu
 ```
 
-### Settings Menu
-
-```
-Settings Menu
-1. Manage mirror sources
-2. Return to main menu
-```
-
-### Mirror Source Management Menu
+### Mirror Source Configuration Menu
 
 ```
 Mirror Source Management Menu
@@ -94,7 +98,29 @@ Mirror Source Management Menu
 3. Add custom mirror source
 4. Delete custom mirror source
 5. Set default mirror source
-6. Return to settings menu
+6. Return to main menu
+```
+
+### Batch Package Management Menu
+
+```
+Batch Package Management Menu
+1. Check updatable packages
+2. Batch update all packages
+3. Batch uninstall packages
+4. Export installed packages list
+5. Install packages from file
+6. Return to main menu
+```
+
+### Python Version Management Menu
+
+```
+Python Version Management Menu
+1. Get available Python versions
+2. Install specific version
+3. Check installed Python versions
+4. Return to main menu
 ```
 
 ## FAQ
@@ -133,7 +159,7 @@ A: Select "3. Check installed Python versions" in the main menu, and the program
 
 ## Example Usage
 
-### Install Python 3.11.9
+### Install Python 3.10.11
 
 1. Run `setup.bat` to start the program
 2. Select "1. Get available Python versions"
@@ -171,6 +197,14 @@ A: Select "3. Check installed Python versions" in the main menu, and the program
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Changelog
+
+### v1.1.0
+- Redesigned program structure, shifting focus from Python version management to pip management
+- Added batch package management functionality, supporting batch update, uninstall, export, and installation from files
+- Added progress bars and loading animations for all time-consuming operations
+- Optimized pip repair functionality, providing multiple repair methods
+- Enhanced mirror source management functionality, supporting more built-in mirror sources
+- Fixed f-string syntax errors and pip command parameter errors
 
 ### v1.0.0
 - Initial release
