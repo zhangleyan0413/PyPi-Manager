@@ -46,11 +46,15 @@ class CommandLineInstaller:
                 print("3. 配置镜像源")
                 print("4. 批量包管理")
                 print("5. Python版本管理")
-                print("6. 检查更新")
-                print("7. 关于作者")
-                print("8. 退出")
+                print("6. Python环境管理")
+                print("7. 工具")
+                print("8. 检查更新")
+                print("9. 检查文件完整性")
+                print("10. 文档")
+                print("11. 关于作者")
+                print("12. 退出")
                 
-                choice = input("请输入选择 (1-8): ")
+                choice = input("请输入选择 (1-12): ")
                 
                 if choice == "1":
                     self.manage_pip_packages()
@@ -63,10 +67,18 @@ class CommandLineInstaller:
                 elif choice == "5":
                     self.manage_python_versions()
                 elif choice == "6":
-                    self.check_for_updates()
+                    self.manage_python_environments()
                 elif choice == "7":
-                    self.show_author_info()
+                    self.tool_menu()
                 elif choice == "8":
+                    self.check_for_updates()
+                elif choice == "9":
+                    self.check_file_integrity()
+                elif choice == "10":
+                    self.show_documentation()
+                elif choice == "11":
+                    self.show_author_info()
+                elif choice == "12":
                     print("\n退出程序...")
                     break
                 else:
@@ -523,6 +535,558 @@ class CommandLineInstaller:
             if "pip" in str(e).lower():
                 self.suggest_fix_pip()
     
+    def manage_python_environments(self):
+        """管理Python虚拟环境"""
+        print("\nPython环境管理")
+        
+        import subprocess
+        import os
+        import sys
+        
+        while True:
+            print("\n环境管理菜单")
+            print("1. 列出所有虚拟环境")
+            print("2. 创建新的虚拟环境")
+            print("3. 激活虚拟环境")
+            print("4. 退出虚拟环境")
+            print("5. 删除虚拟环境")
+            print("6. 返回主菜单")
+            
+            choice = input("请输入选择 (1-6): ")
+            
+            if choice == "1":
+                # 列出所有虚拟环境
+                print("\n列出所有虚拟环境...")
+                # 检查当前目录下的虚拟环境
+                current_dir = os.getcwd()
+                venvs = []
+                for item in os.listdir(current_dir):
+                    item_path = os.path.join(current_dir, item)
+                    if os.path.isdir(item_path):
+                        # 检查是否是虚拟环境（包含Scripts目录和python.exe）
+                        if os.path.exists(os.path.join(item_path, "Scripts", "python.exe")):
+                            venvs.append(item)
+                
+                if venvs:
+                    print("\n已找到的虚拟环境:")
+                    for i, venv in enumerate(venvs, 1):
+                        print(f"{i}. {venv}")
+                else:
+                    print("\n当前目录下未找到虚拟环境")
+                    print("提示: 虚拟环境通常是包含Scripts目录的文件夹")
+                    
+            elif choice == "2":
+                # 创建新的虚拟环境
+                venv_name = input("\n请输入虚拟环境名称: ")
+                if not venv_name:
+                    print("虚拟环境名称不能为空")
+                    continue
+                
+                venv_path = os.path.join(os.getcwd(), venv_name)
+                if os.path.exists(venv_path):
+                    print(f"错误: 目录 {venv_path} 已存在")
+                    continue
+                
+                print(f"\n创建虚拟环境: {venv_name}...")
+                
+                try:
+                    # 使用venv模块创建虚拟环境
+                    cmd = [sys.executable, "-m", "venv", venv_path]
+                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                    
+                    if result.returncode == 0:
+                        print(f"\n✅ 虚拟环境 {venv_name} 创建成功！")
+                        print(f"路径: {venv_path}")
+                        print("\n激活虚拟环境的命令:")
+                        print(f"Windows: {venv_name}\Scripts\activate.bat")
+                        print(f"PowerShell: {venv_name}\Scripts\Activate.ps1")
+                    else:
+                        print(f"\n❌ 创建虚拟环境失败: {result.stderr}")
+                except Exception as e:
+                    print(f"\n❌ 创建虚拟环境时出错: {e}")
+                    
+            elif choice == "3":
+                # 激活虚拟环境
+                print("\n提示: 在命令行中，虚拟环境需要在新的终端中激活")
+                print("以下是激活命令:")
+                
+                # 检查当前目录下的虚拟环境
+                current_dir = os.getcwd()
+                venvs = []
+                for item in os.listdir(current_dir):
+                    item_path = os.path.join(current_dir, item)
+                    if os.path.isdir(item_path):
+                        if os.path.exists(os.path.join(item_path, "Scripts", "python.exe")):
+                            venvs.append(item)
+                
+                if venvs:
+                    print("\n可用的虚拟环境:")
+                    for venv in venvs:
+                        print(f"- {venv}")
+                        print(f"  Windows命令: {venv}\Scripts\activate.bat")
+                        print(f"  PowerShell命令: {venv}\Scripts\Activate.ps1")
+                else:
+                    print("\n当前目录下未找到虚拟环境")
+                    
+            elif choice == "4":
+                # 退出虚拟环境
+                print("\n退出虚拟环境的命令:")
+                print("Windows: deactivate")
+                print("PowerShell: deactivate")
+                print("\n注意: 此命令需要在已激活的虚拟环境中执行")
+                
+            elif choice == "5":
+                # 删除虚拟环境
+                # 检查当前目录下的虚拟环境
+                current_dir = os.getcwd()
+                venvs = []
+                for item in os.listdir(current_dir):
+                    item_path = os.path.join(current_dir, item)
+                    if os.path.isdir(item_path):
+                        if os.path.exists(os.path.join(item_path, "Scripts", "python.exe")):
+                            venvs.append(item)
+                
+                if not venvs:
+                    print("\n当前目录下未找到虚拟环境")
+                    continue
+                
+                print("\n选择要删除的虚拟环境:")
+                for i, venv in enumerate(venvs, 1):
+                    print(f"{i}. {venv}")
+                
+                try:
+                    venv_choice = int(input("请输入编号: "))
+                    if venv_choice < 1 or venv_choice > len(venvs):
+                        print("无效的选择")
+                        continue
+                    
+                    selected_venv = venvs[venv_choice - 1]
+                    venv_path = os.path.join(current_dir, selected_venv)
+                    
+                    confirm = input(f"确认删除虚拟环境 {selected_venv} 吗？ (y/n): ")
+                    if confirm.lower() != "y":
+                        print("删除操作已取消")
+                        continue
+                    
+                    print(f"\n删除虚拟环境: {selected_venv}...")
+                    
+                    # 使用shutil删除目录
+                    import shutil
+                    shutil.rmtree(venv_path)
+                    print(f"✅ 虚拟环境 {selected_venv} 删除成功")
+                except ValueError:
+                    print("请输入有效的数字")
+                except Exception as e:
+                    print(f"❌ 删除虚拟环境时出错: {e}")
+                    
+            elif choice == "6":
+                break
+            else:
+                print("无效选择，请重新输入")
+    
+    def tool_menu(self):
+        """工具菜单"""
+        print("\n工具菜单")
+        
+        while True:
+            print("\n1. 代码格式化")
+            print("2. 代码检查")
+            print("3. 返回主菜单")
+            
+            choice = input("请输入选择 (1-3): ")
+            
+            if choice == "1":
+                self.format_code()
+            elif choice == "2":
+                self.lint_code()
+            elif choice == "3":
+                break
+            else:
+                print("无效选择，请重新输入")
+    
+    def format_code(self):
+        """代码格式化"""
+        print("\n代码格式化")
+        
+        import subprocess
+        import sys
+        
+        # 检查autopep8是否安装
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pip", "show", "autopep8"],
+                capture_output=True,
+                text=True
+            )
+            
+            if result.returncode != 0:
+                print("未安装autopep8，正在安装...")
+                install_result = subprocess.run(
+                    [sys.executable, "-m", "pip", "install", "autopep8"],
+                    capture_output=True,
+                    text=True
+                )
+                if install_result.returncode != 0:
+                    print(f"安装autopep8失败: {install_result.stderr}")
+                    return
+                print("autopep8安装成功")
+        except Exception as e:
+            print(f"检查autopep8时出错: {e}")
+            return
+        
+        # 获取要格式化的文件路径
+        file_path = input("请输入要格式化的Python文件路径: ")
+        if not file_path:
+            print("文件路径不能为空")
+            return
+        
+        # 检查文件是否存在
+        import os
+        if not os.path.exists(file_path):
+            print(f"文件不存在: {file_path}")
+            return
+        
+        # 检查文件是否是Python文件
+        if not file_path.endswith(".py"):
+            print("请输入Python文件(.py)")
+            return
+        
+        print(f"\n格式化文件: {file_path}...")
+        
+        try:
+            # 使用autopep8格式化代码
+            result = subprocess.run(
+                [sys.executable, "-m", "autopep8", "--in-place", file_path],
+                capture_output=True,
+                text=True
+            )
+            
+            if result.returncode == 0:
+                print(f"✅ 文件 {file_path} 格式化成功")
+            else:
+                print(f"❌ 格式化失败: {result.stderr}")
+        except Exception as e:
+            print(f"❌ 格式化时出错: {e}")
+    
+    def lint_code(self):
+        """代码检查"""
+        print("\n代码检查")
+        
+        import subprocess
+        import sys
+        
+        # 检查pylint是否安装
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pip", "show", "pylint"],
+                capture_output=True,
+                text=True
+            )
+            
+            if result.returncode != 0:
+                print("未安装pylint，正在安装...")
+                install_result = subprocess.run(
+                    [sys.executable, "-m", "pip", "install", "pylint"],
+                    capture_output=True,
+                    text=True
+                )
+                if install_result.returncode != 0:
+                    print(f"安装pylint失败: {install_result.stderr}")
+                    return
+                print("pylint安装成功")
+        except Exception as e:
+            print(f"检查pylint时出错: {e}")
+            return
+        
+        # 获取要检查的文件路径
+        file_path = input("请输入要检查的Python文件路径: ")
+        if not file_path:
+            print("文件路径不能为空")
+            return
+        
+        # 检查文件是否存在
+        import os
+        if not os.path.exists(file_path):
+            print(f"文件不存在: {file_path}")
+            return
+        
+        # 检查文件是否是Python文件
+        if not file_path.endswith(".py"):
+            print("请输入Python文件(.py)")
+            return
+        
+        print(f"\n检查文件: {file_path}...")
+        print("这可能需要一些时间，请耐心等待...")
+        
+        try:
+            # 使用pylint检查代码
+            result = subprocess.run(
+                [sys.executable, "-m", "pylint", file_path],
+                capture_output=True,
+                text=True
+            )
+            
+            print("\n检查结果:")
+            print(result.stdout)
+            if result.stderr:
+                print("\n错误信息:")
+                print(result.stderr)
+            
+            if result.returncode == 0:
+                print("\n✅ 代码检查通过，未发现问题")
+            else:
+                print("\n⚠️  代码检查发现问题，请根据上面的提示进行修复")
+        except Exception as e:
+            print(f"❌ 检查时出错: {e}")
+    
+    def check_file_integrity(self):
+        """检查文件完整性"""
+        print("\n检查文件完整性")
+        print("=======================================")
+        
+        import subprocess
+        import sys
+        import os
+        
+        # 检查diagnostic.py是否存在
+        diagnostic_path = os.path.join(os.path.dirname(__file__), "diagnostic.py")
+        if not os.path.exists(diagnostic_path):
+            print("❌ diagnostic.py 文件不存在")
+            print("请确保diagnostic.py文件在程序目录中")
+            return
+        
+        print("正在运行文件完整性检查...")
+        print("这可能需要一些时间，请耐心等待...")
+        
+        try:
+            # 运行diagnostic.py
+            result = subprocess.run(
+                [sys.executable, diagnostic_path],
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+            
+            print("\n检查结果:")
+            print(result.stdout)
+            
+            if result.stderr:
+                print("\n错误信息:")
+                print(result.stderr)
+            
+            # 检查是否有文件不完整
+            if "文件不完整" in result.stdout or "缺少文件" in result.stdout:
+                print("\n⚠️  发现文件不完整，建议修复")
+                
+                # 询问是否从GitHub获取最新文件
+                fix_choice = input("是否从GitHub仓库获取最新文件来修复？ (y/n): ")
+                if fix_choice.lower() == "y":
+                    self.fix_files_from_github()
+            else:
+                print("\n✅ 所有文件完整，无需修复")
+        except subprocess.TimeoutExpired:
+            print("\n❌ 检查超时，请稍后重试")
+        except Exception as e:
+            print(f"\n❌ 检查时出错: {e}")
+    
+    def fix_files_from_github(self):
+        """从GitHub获取最新文件来修复"""
+        print("\n从GitHub获取最新文件...")
+        
+        import requests
+        import zipfile
+        import os
+        import shutil
+        import tempfile
+        
+        repo_url = "https://github.com/zhangleyan0413/PyPi-Manager/archive/refs/heads/main.zip"
+        
+        try:
+            # 创建临时目录
+            with tempfile.TemporaryDirectory() as temp_dir:
+                zip_path = os.path.join(temp_dir, "pypi-manager.zip")
+                
+                # 下载zip文件
+                print("正在下载最新代码...")
+                response = requests.get(repo_url, stream=True, timeout=30)
+                response.raise_for_status()
+                
+                # 保存zip文件
+                with open(zip_path, "wb") as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        f.write(chunk)
+                
+                print("下载完成，正在解压...")
+                
+                # 解压zip文件
+                with zipfile.ZipFile(zip_path, "r") as zip_ref:
+                    zip_ref.extractall(temp_dir)
+                
+                # 找到解压后的目录
+                extracted_dir = None
+                for item in os.listdir(temp_dir):
+                    item_path = os.path.join(temp_dir, item)
+                    if os.path.isdir(item_path) and item.startswith("PyPi-Manager-"):
+                        extracted_dir = item_path
+                        break
+                
+                if not extracted_dir:
+                    print("❌ 无法找到解压后的目录")
+                    return
+                
+                # 获取当前程序目录
+                current_dir = os.path.dirname(__file__)
+                
+                # 复制文件
+                print("正在复制文件...")
+                
+                # 要复制的文件列表
+                files_to_copy = [
+                    "main.py",
+                    "main_gui.py",
+                    "diagnostic.py",
+                    "version_fetcher.py",
+                    "installer.py",
+                    "setup.bat",
+                    "README.md",
+                    "README_CN.md"
+                ]
+                
+                copied_count = 0
+                for file_name in files_to_copy:
+                    src_path = os.path.join(extracted_dir, file_name)
+                    dst_path = os.path.join(current_dir, file_name)
+                    
+                    if os.path.exists(src_path):
+                        try:
+                            shutil.copy2(src_path, dst_path)
+                            print(f"✅ 复制 {file_name} 成功")
+                            copied_count += 1
+                        except Exception as e:
+                            print(f"❌ 复制 {file_name} 失败: {e}")
+                    else:
+                        print(f"⚠️  源文件不存在: {file_name}")
+                
+                print(f"\n修复完成，成功复制 {copied_count} 个文件")
+                print("请重新运行程序以应用修复")
+                
+        except Exception as e:
+            print(f"❌ 从GitHub获取文件时出错: {e}")
+    
+    def show_documentation(self):
+        """显示文档"""
+        print("\nPyPi Manager 文档")
+        print("=======================================")
+        
+        while True:
+            print("\n文档菜单")
+            print("1. 功能介绍")
+            print("2. 使用指南")
+            print("3. 快捷键")
+            print("4. 常见问题")
+            print("5. 返回主菜单")
+            
+            choice = input("请输入选择 (1-5): ")
+            
+            if choice == "1":
+                print("\n功能介绍")
+                print("=======================================")
+                print("PyPi Manager 是一个功能强大的Python包管理工具，")
+                print("支持以下主要功能:")
+                print("\n1. pip包管理")
+                print("   - 查看已安装的包")
+                print("   - 安装新包")
+                print("   - 卸载包")
+                print("   - 升级包")
+                print("   - 搜索包")
+                print("\n2. 镜像源配置")
+                print("   - 支持多个国内镜像源")
+                print("   - 自定义镜像源")
+                print("   - 快速切换镜像源")
+                print("\n3. 批量操作")
+                print("   - 批量安装包")
+                print("   - 批量卸载包")
+                print("   - 批量更新包")
+                print("\n4. Python版本管理")
+                print("   - 查看可用Python版本")
+                print("   - 安装指定Python版本")
+                print("   - 检查已安装版本")
+                print("\n5. Python环境管理")
+                print("   - 创建虚拟环境")
+                print("   - 管理虚拟环境")
+                print("\n6. 工具")
+                print("   - 代码格式化")
+                print("   - 代码检查")
+                print("\n7. 其他功能")
+                print("   - 检查更新")
+                print("   - 检查文件完整性")
+                print("   - 自动修复文件")
+                input("\n按Enter键继续...")
+                
+            elif choice == "2":
+                print("\n使用指南")
+                print("=======================================")
+                print("基本使用流程:")
+                print("\n1. 启动程序")
+                print("   - 双击 setup.bat 启动")
+                print("   - 或在命令行中运行 python main.py")
+                print("\n2. 管理pip包")
+                print("   - 选择 '管理pip包' 选项")
+                print("   - 在子菜单中选择相应操作")
+                print("\n3. 配置镜像源")
+                print("   - 选择 '配置镜像源' 选项")
+                print("   - 选择合适的镜像源")
+                print("\n4. 批量操作")
+                print("   - 选择 '批量包管理' 选项")
+                print("   - 按照提示进行操作")
+                print("\n5. Python版本管理")
+                print("   - 选择 'Python版本管理' 选项")
+                print("   - 查看可用版本并安装")
+                print("\n6. Python环境管理")
+                print("   - 选择 'Python环境管理' 选项")
+                print("   - 创建和管理虚拟环境")
+                input("\n按Enter键继续...")
+                
+            elif choice == "3":
+                print("\n快捷键")
+                print("=======================================")
+                print("命令行版本:")
+                print("   - 输入数字选择菜单项")
+                print("   - 按Enter键确认选择")
+                print("\nGUI版本:")
+                print("   - Ctrl+N: 新建项目")
+                print("   - Ctrl+O: 打开项目")
+                print("   - Ctrl+Q: 退出程序")
+                print("   - F1: 显示文档")
+                print("   - F5: 刷新包列表")
+                input("\n按Enter键继续...")
+                
+            elif choice == "4":
+                print("\n常见问题")
+                print("=======================================")
+                print("Q: 安装包时出错怎么办？")
+                print("A: 尝试以下方法:")
+                print("   1. 检查网络连接")
+                print("   2. 切换到其他镜像源")
+                print("   3. 检查并修复pip")
+                print("\nQ: 虚拟环境创建失败怎么办？")
+                print("A: 确保:")
+                print("   1. 有足够的磁盘空间")
+                print("   2. 路径中没有特殊字符")
+                print("   3. 有适当的权限")
+                print("\nQ: 如何更新程序？")
+                print("A: 选择 '检查更新' 选项，")
+                print("   程序会自动检查并下载最新版本")
+                print("\nQ: 文件完整性检查失败怎么办？")
+                print("A: 选择自动修复选项，")
+                print("   程序会从GitHub获取最新文件")
+                input("\n按Enter键继续...")
+                
+            elif choice == "5":
+                break
+            else:
+                print("无效选择，请重新输入")
+    
     def upgrade_package(self):
         """升级依赖库"""
         package_name = input("\n请输入要升级的依赖库名称: ")
@@ -851,7 +1415,7 @@ class CommandLineInstaller:
         print("=======================================")
         print("项目名称: PyPi Manager")
         print("全称: Python Pip Manager")
-        print("版本: 1.2.0")
+        print("版本: 1.3.0")
         print("作者: myiunagn")
         print("邮箱: myiunagn@outlook.com")
         print("GitHub: https://github.com/zhangleyan0413/PyPi-Manager")
@@ -888,7 +1452,7 @@ class CommandLineInstaller:
         
         try:
             # 获取当前版本
-            current_version = "1.2.0"
+            current_version = "1.3.0"
             
             # 从GitHub API获取仓库信息
             repo_url = "https://api.github.com/repos/zhangleyan0413/PyPi-Manager"

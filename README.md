@@ -2,7 +2,7 @@
 
 Full name: Python Pip Manager
 
-Version: 1.2.0
+Version: 1.3.0
 
 A powerful Python environment management tool that simplifies Python installation, dependency management, pip troubleshooting, and mirror source configuration.
 
@@ -39,6 +39,33 @@ A powerful Python environment management tool that simplifies Python installatio
 - Install specific Python version
 - Check installed Python versions and their paths
 
+### 🌐 Python Environment Management
+- List all virtual environments
+- Create new virtual environments
+- Activate virtual environments
+- Delete virtual environments
+
+### 🛠️ Tools
+- Code formatting using autopep8
+- Code checking using pylint
+
+### 🔍 File Integrity Check
+- Check integrity of program files
+- Automatically fix missing or corrupted files from GitHub
+
+### 📖 Documentation
+- Detailed feature introduction
+- Usage guides
+- Keyboard shortcuts
+- Frequently asked questions
+
+### 🖥️ GUI Version
+- wxPython-based graphical interface
+- Modern, user-friendly design
+- Real-time progress bars
+- Detailed status updates
+- Quick access buttons for common operations
+
 ### 💡 Smart Features
 - Added progress bars and loading animations for all time-consuming operations
 - Support domestic mirror source acceleration
@@ -72,8 +99,13 @@ PyPi Manager
 3. Configure mirror sources
 4. Batch package management
 5. Python version management
-6. About author
-7. Exit
+6. Python environment management
+7. Tools
+8. Check updates
+9. Check file integrity
+10. Documentation
+11. About author
+12. Exit
 ```
 
 ### pip Package Management Menu
@@ -144,6 +176,8 @@ A: Select "3. Check installed Python versions" in the main menu, and the program
 
 ### Core Modules
 - `main.py` - Main program entry, containing command-line interface and core logic
+- `main_gui.py` - GUI version of the program, using wxPython
+- `diagnostic.py` - File integrity check tool
 - `version_fetcher.py` - Get Python version information
 - `installer.py` - Handle Python installation process
 - `setup.bat` - Environment initialization script
@@ -151,6 +185,9 @@ A: Select "3. Check installed Python versions" in the main menu, and the program
 ### Dependencies
 - Python 3.6+
 - requests (for fetching Python version information)
+- wxPython (for GUI version)
+- autopep8 (for code formatting)
+- pylint (for code checking)
 
 ### System Requirements
 - Windows operating system
@@ -197,6 +234,18 @@ A: Select "3. Check installed Python versions" in the main menu, and the program
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Changelog
+
+### v1.3.0
+- Added wxPython-based GUI version with modern, user-friendly design
+- Added Python environment management functionality (virtual environments)
+- Added tools menu with code formatting and code checking features
+- Added file integrity check and automatic repair functionality
+- Added comprehensive documentation with usage guides and FAQs
+- Updated main menu to include all new features
+- Improved uninstall package functionality with package selection
+- Integrated search and install functionality into a single tab in GUI
+- Beautified GUI interface with enhanced menu system and visual elements
+- Updated version number to 1.3.0 across all files
 
 ### v1.2.0
 - Added automatic update functionality, supporting direct download of the latest version from GitHub repository
