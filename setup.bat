@@ -85,7 +85,7 @@ echo ===============================
 
 REM Start main program with GUI interface
 echo Starting PyPi Manager with GUI Interface...
-python main.py
+python main_gui.py
 
 echo Program execution completed
 pause
