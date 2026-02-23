@@ -17,7 +17,6 @@ This directory contains test files for the PyPi Manager application. These tests
 | `test_updatable.py` | Tests package update checking functionality |
 | `test_update.py` | Tests the update checking functionality |
 | `test_version_compare.py` | Tests version number comparison functionality |
-| `ui.py` | User interface utilities for testing |
 
 ## How to Run Tests
 
